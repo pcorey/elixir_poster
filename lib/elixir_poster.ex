@@ -30,17 +30,17 @@ defmodule ElixirPoster do
 
   def load_code(data = %PosterData{code_path: code_path}) do
     Logger.debug("Loading code from '#{code_path}'...")
-    code_path
+    code = code_path
     |> File.read!
     |> join_code
     |> String.codepoints
-    |> Enum.into(data, fn (code) -> %{data | code: code} end)
+    %{data | code: code}
   end
 
   def load_image(data = %PosterData{image_path: image_path}) do
     Logger.debug("Loading image from '#{image_path}'...")
-    Imagineer.load(image_path)
-    |> Enum.into(data, fn ({:ok, image}) -> %{data | image: image} end)
+    {:ok, image} = Imagineer.load(image_path)
+    %{data | image: image}
   end
 
   def merge_pixel_into_row(fill, character, x, y, []) do
@@ -92,7 +92,7 @@ defmodule ElixirPoster do
                              final_height: final_height,
                              image: %{width: width, height: height}}) do
     Logger.debug("Constructing svg with #{length text_elements} text elements...")
-    {
+    svg = {
       :svg,
       %{
         viewBox: "0 0 #{width*ratio} #{height}",
@@ -104,7 +104,7 @@ defmodule ElixirPoster do
       text_elements
     }
     |> XmlBuilder.generate
-    |> Enum.into(data, fn (svg) -> %{data | svg: svg} end)
+    %{data | svg: svg}
   end
 
   def save_svg(%PosterData{svg: svg, out_path: out_path}) do
