@@ -27,7 +27,7 @@ defmodule ElixirPoster.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:chunky_svg, "~> 0.0.4"},
+    [{:xml_builder, "~> 0.0.9"},
      {:imagineer, "~> 0.2.1"}]
   end
 end

@@ -58,20 +58,15 @@ defmodule ElixirPoster do
     [{:text, %{x: x, y: y, fill: fill}, character} | pixels]
   end
 
-  def get_pixel_reducer(code, width, ratio, y) do
-    fn ({pixel, x}, pixels) ->
-      character = Enum.at(code, y * width + x)
-      merge_pixel_into_row(to_hex(pixel), character, x * ratio, y, pixels)
-    end
-  end
-
-  def get_row_reducer(code, width, ratio) do
-    fn ({row, y}, rows) ->
+  def get_row_mapper(code, width, ratio) do
+    fn ({row, y}) ->
       row
       |> Enum.with_index
-      |> Enum.reduce([], get_pixel_reducer(code, width, ratio, y))
+      |> Enum.reduce([], fn
+        {pixel, x}, pixels -> character = Enum.at(code, y * width + x)
+                              merge_pixel_into_row(to_hex(pixel), character, x * ratio, y, pixels)
+      end)
       |> Enum.reverse
-      |> Enum.into(rows)
     end
   end
 
@@ -81,7 +76,7 @@ defmodule ElixirPoster do
     Logger.debug("Constructing text elements...")
     text_elements = pixels
     |> Enum.with_index
-    |> Enum.reduce([], get_row_reducer(code, width, ratio))
+    |> Enum.map(get_row_mapper(code, width, ratio))
     |> List.flatten
     %{data | text_elements: text_elements}
   end
