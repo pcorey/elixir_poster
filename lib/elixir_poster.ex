@@ -8,12 +8,25 @@ defmodule ElixirPoster do
   iex> ElixirPoster.to_hex {255, 0, 128}
   "#FF0080"
   """
+  def to_hex({r, g, b}) do
+    "#" <>
+    (r |> :binary.encode_unsigned |> Base.encode16) <>
+    (g |> :binary.encode_unsigned |> Base.encode16) <>
+    (b |> :binary.encode_unsigned |> Base.encode16)
+  end
+
+  @doc """
+  iex> ElixirPoster.to_hex {50, 150, 250}
+  "#3296FA"
+  iex> ElixirPoster.to_hex {255, 0, 128}
+  "#FF0080"
+  """
   def to_hex({r, g, b, a}) do
     "#" <>
     (r |> :binary.encode_unsigned |> Base.encode16) <>
     (g |> :binary.encode_unsigned |> Base.encode16) <>
     (b |> :binary.encode_unsigned |> Base.encode16) <>
-    (a |> :binary.encode_unsigned |> Base.encode16) 
+    (a |> :binary.encode_unsigned |> Base.encode16)
   end
 
   @doc """
@@ -125,6 +138,7 @@ defmodule ElixirPoster do
     |> save_svg
   end
 
-  def go, do: go(0.6, 4, 4, "./code", "./image.png", "out.svg")
+  # def go, do: go(0.6, 4, 4, "./code", "./image.png", "out.svg")
+  def go, do: go(0.6, 3150, 4050, "./full_elixir_source", "./elixir_small_recolored2.png", "out.svg")
 
 end
