@@ -8,11 +8,12 @@ defmodule ElixirPoster do
   iex> ElixirPoster.to_hex {255, 0, 128}
   "#FF0080"
   """
-  def to_hex({r, g, b}) do
+  def to_hex({r, g, b, a}) do
     "#" <>
     (r |> :binary.encode_unsigned |> Base.encode16) <>
     (g |> :binary.encode_unsigned |> Base.encode16) <>
-    (b |> :binary.encode_unsigned |> Base.encode16)
+    (b |> :binary.encode_unsigned |> Base.encode16) <>
+    (a |> :binary.encode_unsigned |> Base.encode16) 
   end
 
   @doc """

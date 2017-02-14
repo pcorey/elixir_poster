@@ -22,3 +22,10 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     end
     ```
 
+
+## Running
+1. Put any code you want used in a file `code`
+2. Put the logo of your choosing in a file, `image.png`
+3. `mix deps`
+4. `iex -S mix`
+5. `ElixirPoster.go`
