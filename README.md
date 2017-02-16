@@ -13,6 +13,9 @@ I've published this repo as a learning tool and as a supplement to [this article
 Read below if you're still intent on giving it a spin:
 
 ## Instructions
+
+This is an Elixir project. You'll need Elixir installed before running this application. Check out the [Elixir Introduction](http://elixir-lang.org/getting-started/introduction.html) for help getting up to speed. Once you've got Elixir up and running, and cloned this project locally, proceed to the following steps.
+
 1. Scale an image of your choosing to `1.667x1` and resize to approximately `398px` by `300px`. As an example, [here’s the image](https://s3-us-west-1.amazonaws.com/www.east5th.co/img/poster_source_image.png) I used to generate the Elixir poster.
 2. Gather the source code you want to use in the poster into a single file.
 3. From the project root, start an interactive shell (`iex -S mix`)
