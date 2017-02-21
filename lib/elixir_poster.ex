@@ -138,6 +138,6 @@ defmodule ElixirPoster do
     |> save_svg
   end
 
-  def go, do: go(0.6, 4, 4, "./code", "./image.png", "out.svg")
+  def go, do: go(0.6, 3150, 4050, "./code", "./image.png", "out.svg")
 
 end
