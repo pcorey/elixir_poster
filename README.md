@@ -26,6 +26,6 @@ This is an Elixir project. You'll need Elixir installed before running this appl
 ## Simpler Instructions
 1. Put any code you want used in a file `code`
 2. Put the logo of your choosing in a file, `image.png`
-3. `mix deps`
+3. `mix deps.get`
 4. `iex -S mix`
 5. `ElixirPoster.go`
