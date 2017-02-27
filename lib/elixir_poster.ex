@@ -60,38 +60,29 @@ defmodule ElixirPoster do
     %{data | image: image}
   end
 
-  def merge_pixel_into_row(fill, character, x, y, []) do
-    [{:text, %{x: x, y: y, fill: fill}, character}]
-  end
-
-  def merge_pixel_into_row(fill, character, _, _, [{:text, element = %{fill: fill}, text} | tail]) do
-    [{:text, element, text <> character} | tail]
-  end
-
-  def merge_pixel_into_row(fill, character, x, y, pixels) do
-    [{:text, %{x: x, y: y, fill: fill}, character} | pixels]
-  end
-
-  def get_row_mapper(code, width, ratio) do
-    fn ({row, y}) ->
-      row
-      |> Enum.with_index
-      |> Enum.reduce([], fn
-        {pixel, x}, pixels -> character = Enum.at(code, y * width + x)
-                              merge_pixel_into_row(to_hex(pixel), character, x * ratio, y, pixels)
-      end)
-      |> Enum.reverse
-    end
-  end
-
   def construct_text_elements(data = %PosterData{code: code,
                                                  ratio: ratio,
                                                  image: %{width: width, pixels: pixels}}) do
     Logger.debug("Constructing text elements...")
     text_elements = pixels
-    |> Enum.with_index
-    |> Enum.map(get_row_mapper(code, width, ratio))
     |> List.flatten
+    |> Enum.zip(code)
+    |> Enum.reduce({1, []}, fn
+      {pixel, character}, {i, acc} ->
+        x = rem(i, width)
+        y = div(i, width)
+        fill = to_hex(pixel)
+        x_dst = x * ratio
+        case {x, acc} do
+          {1, _acc} ->
+            {i + 1, [{:text, %{x: x_dst, y: y, fill: fill}, character} | acc]}
+          {_x, [{:text, element = %{fill: ^fill}, text} | tail]} ->
+            {i + 1, [{:text, element, text <> character} | tail]}
+          {_x, _acc} ->
+            {i + 1, [{:text, %{x: x_dst, y: y, fill: fill}, character} | acc]}
+        end
+    end)
+    |> elem(1)
     %{data | text_elements: text_elements}
   end
 
