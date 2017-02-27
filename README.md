@@ -20,7 +20,7 @@ This is an Elixir project. You'll need Elixir installed before running this appl
 2. Gather the source code you want to use in the poster into a single file.
 3. From the project root, start an interactive shell (`iex -S mix`)
 4. Call the `ElixirPoster.go` function. By default, this assumes that your image is called `image.png`, and your source file is called `code` in the root of the project. These options can be overridden, if desired. See the `ElixirPoster.go` definition.
-5. On my machine, with the given source image, it takes approximately 1 minute to generate the final poster. The final result is an SVG saved to `out.svg`.
+5. On my machine, with the given source image, it takes approximately 3 seconds to generate the final poster. The final result is an SVG saved to `out.svg`.
 6. Open `out.svg` in Inkscape, export to PNG, print!
 
 ## Simpler Instructions
